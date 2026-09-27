@@ -1,0 +1,21 @@
+{
+  "protocol": "member-engine-v1",
+  "files": {
+    "personal-contract.ts": {
+      "source": "lib/research/personal-contract.ts",
+      "sha256": "9e316f6b62d5409410dea7b70bfbc6f7f341e769fbbe552463fa269d807aaf49"
+    },
+    "personal.ts": {
+      "source": "lib/research/personal.ts",
+      "sha256": "c498469796189f2ffd76c743bd9c527b2510b390e4480ce26b0614b4a3b91d7b"
+    },
+    "radar-contract.ts": {
+      "source": "lib/research/radar-contract.ts",
+      "sha256": "a8c2afddda1fb10ea34c10d564e4bfcd9c8f54118fb2f5a984917f2e8bf856ef"
+    },
+    "member-export-contract.ts": {
+      "source": "lib/research/member-export-contract.ts",
+      "sha256": "8580c448657b10b7b6af9b198178946d6d7299efa057ce32b0b351ce301bbc48"
+    }
+  }
+}

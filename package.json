@@ -1,0 +1,29 @@
+{
+  "name": "feishubrief-member",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.21.0 <25"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --import tsx --watch src/server.ts",
+    "start": "node --env-file-if-exists=.env --import tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "engine:sync": "node scripts/sync-engine.mjs",
+    "engine:check": "node scripts/sync-engine.mjs --check",
+    "bootstrap": "node --env-file-if-exists=.env --import tsx scripts/bootstrap.ts",
+    "backup": "node --env-file-if-exists=.env --import tsx scripts/backup.ts"
+  },
+  "dependencies": {
+    "nodemailer": "^10.0.10",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/nodemailer": "^7.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}

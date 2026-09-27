@@ -1,0 +1,47 @@
+name: Member offline tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: member-test-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck standalone Member package
+        run: npm run typecheck
+      - name: Test with loopback networking only
+        shell: bash
+        run: |
+          node_path="$(command -v node)"
+          # This is the same test entrypoint as npm test. A fresh network namespace
+          # permits the local HTTP integration server but has no external routes.
+          # Tests use synthetic identities, temporary SQLite and injected mail.
+          sudo unshare --net bash -eu -c '
+            ip link set lo up
+            export NODE_ENV=test
+            exec "$@"
+          ' -- "$node_path" --import tsx --test tests/*.test.ts
+      # engine:check is deliberately absent: this standalone repository has no sibling
+      # FeishuBrief-next checkout. Engine parity is checked before packaging/release.
+      # No SMTP/model/notification secrets, deployment, scheduled jobs or data artifacts.

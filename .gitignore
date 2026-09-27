@@ -1,0 +1,20 @@
+/node_modules/
+/data/
+/.local/
+.env
+.env.*
+*.env
+!.env.example
+/coverage/
+/test-results/
+*.tsbuildinfo
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.backup
+
+# Runtime output and local implementation journals are not source.
+logs/
+*.log
+[Ll][Oo][Gg].[Mm][Dd]
+过程/

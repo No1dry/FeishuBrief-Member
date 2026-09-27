@@ -1,0 +1,40 @@
+[Unit]
+Description=FeishuBrief private member service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=feishubrief
+Group=feishubrief
+WorkingDirectory=/opt/feishubrief/member
+# Verify this executable is Node 24.21.0 before installing the unit.
+# The environment file must be readable only by root and this service group.
+ExecStart=/usr/bin/node --env-file=/etc/feishubrief/member.env --import tsx src/server.ts
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# The database, WAL/SHM and backups all stay in this private persistent directory.
+StateDirectory=feishubrief
+StateDirectoryMode=0700
+UMask=0077
+ReadWritePaths=/var/lib/feishubrief
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target
